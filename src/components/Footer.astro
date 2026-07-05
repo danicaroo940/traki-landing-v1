@@ -1,0 +1,31 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations, oppositeLang } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const other = oppositeLang(lang);
+---
+<footer class="footer">
+  <div class="container footer__inner">
+    <div>
+      <a href={`/${lang}/`} class="wordmark">TRAKI<span class="dot">.</span></a>
+      <p class="footer__tagline">{t('footer.tagline')}</p>
+    </div>
+    <nav class="footer__links">
+      <a href="/privacy_policy.html">{t('footer.privacy')}</a>
+      <a href={`/${other}/`}>{other.toUpperCase()}</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .footer { border-top: 1px solid var(--border-subtle); padding-block: var(--s-9); }
+  .footer__inner { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--s-6); flex-wrap: wrap; }
+  .wordmark { font-family: var(--font-display); font-weight: 900; font-size: 20px; text-transform: uppercase; letter-spacing: -0.02em; }
+  .dot { color: var(--accent); }
+  .footer__tagline { color: var(--text-muted); font-size: 14px; margin: var(--s-2) 0 0; }
+  .footer__links { display: flex; gap: var(--s-6); }
+  .footer__links a { color: var(--text-secondary); font-size: 14px; }
+  .footer__links a:hover { color: var(--text-primary); }
+</style>
