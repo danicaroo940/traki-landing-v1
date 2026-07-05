@@ -61,7 +61,7 @@ const endpoint = import.meta.env.PUBLIC_WAITLIST_ENDPOINT ?? '';
       return;
     }
     const endpoint = form.dataset.endpoint ?? '';
-    const { ok } = endpoint ? await submitWaitlist(endpoint, email.value) : { ok: true };
+    const { ok } = endpoint ? await submitWaitlist(endpoint, email.value) : { ok: false };
     status.dataset.state = ok ? 'ok' : 'err';
     status.textContent = (ok ? status.dataset.success : status.dataset.error) ?? '';
     if (ok) form.reset();

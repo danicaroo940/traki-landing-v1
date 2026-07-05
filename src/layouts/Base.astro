@@ -18,8 +18,10 @@ const other = oppositeLang(lang);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="/videos/hero-poster.jpg" />
     <link rel="alternate" hreflang={lang} href={`/${lang}/`} />
     <link rel="alternate" hreflang={other} href={`/${other}/`} />
+    <link rel="alternate" hreflang="x-default" href="/es/" />
   </head>
   <body>
     <slot />
