@@ -1,0 +1,22 @@
+{
+  "name": "remotion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "render": "remotion render src/index.ts HeroVideo ../public/videos/hero.mp4",
+    "render:webm": "remotion render src/index.ts HeroVideo ../public/videos/hero.webm --codec=vp8",
+    "still": "remotion still src/index.ts HeroVideo ../public/videos/hero-poster.jpg --frame=60",
+    "studio": "remotion studio src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@remotion/cli": "^4.0.484",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "remotion": "^4.0.484"
+  }
+}

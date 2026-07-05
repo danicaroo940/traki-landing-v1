@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Remotion isolated project artifacts
+remotion/node_modules
+remotion/out
