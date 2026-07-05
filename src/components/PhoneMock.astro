@@ -1,0 +1,16 @@
+---
+interface Props { src: string; alt: string; }
+const { src, alt } = Astro.props;
+---
+<div class="phone" data-reveal>
+  <img src={src} alt={alt} loading="lazy" width="1080" height="1920" />
+</div>
+
+<style>
+  .phone {
+    position: relative; border-radius: var(--r-2xl); overflow: hidden;
+    border: 1px solid var(--accent); box-shadow: var(--glow-volt);
+    max-width: 300px; margin-inline: auto;
+  }
+  .phone img { border-radius: inherit; }
+</style>

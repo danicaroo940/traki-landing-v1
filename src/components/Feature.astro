@@ -1,0 +1,36 @@
+---
+import PhoneMock from './PhoneMock.astro';
+interface Props {
+  eyebrow: string; title: string; titleAccent?: string; body: string;
+  src: string; alt: string; reverse?: boolean;
+}
+const { eyebrow, title, titleAccent, body, src, alt, reverse = false } = Astro.props;
+---
+<section class={`feature ${reverse ? 'feature--reverse' : ''}`}>
+  <div class="container feature__grid">
+    <div class="feature__text">
+      <p class="label" data-reveal>{eyebrow}</p>
+      <h2 class="display-md" data-reveal>
+        {title}{titleAccent ? <> <span class="accent">{titleAccent}</span></> : null}
+      </h2>
+      <p class="feature__body" data-reveal>{body}</p>
+    </div>
+    <div class="feature__media">
+      <PhoneMock src={src} alt={alt} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature { padding-block: var(--s-11); }
+  .feature__grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-10); align-items: center;
+  }
+  .feature--reverse .feature__media { order: -1; }
+  .feature__text { display: flex; flex-direction: column; gap: var(--s-4); }
+  .feature__body { color: var(--text-secondary); font-size: 18px; max-width: 44ch; margin: 0; }
+  @media (max-width: 860px) {
+    .feature__grid { grid-template-columns: 1fr; gap: var(--s-8); }
+    .feature--reverse .feature__media { order: 0; }
+  }
+</style>
