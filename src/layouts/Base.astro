@@ -1,0 +1,27 @@
+---
+import '../styles/global.css';
+import type { Lang } from '../i18n/ui';
+import { oppositeLang } from '../i18n/ui';
+
+interface Props { lang: Lang; title: string; description: string; }
+const { lang, title, description } = Astro.props;
+const other = oppositeLang(lang);
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="alternate" hreflang={lang} href={`/${lang}/`} />
+    <link rel="alternate" hreflang={other} href={`/${other}/`} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
