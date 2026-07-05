@@ -1,0 +1,42 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations, oppositeLang } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const other = oppositeLang(lang);
+---
+<header class="nav" data-nav>
+  <div class="container nav__inner">
+    <a href={`/${lang}/`} class="wordmark" aria-label="TRAKI">TRAKI<span class="dot">.</span></a>
+    <nav class="nav__actions">
+      <a class="nav__lang" href={`/${other}/`} aria-label={`Switch to ${other.toUpperCase()}`}>{other.toUpperCase()}</a>
+      <a class="btn btn-primary nav__cta" href="#waitlist">{t('nav.cta')}</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    border-bottom: 1px solid transparent;
+    transition: background var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out);
+  }
+  .nav[data-scrolled] {
+    background: color-mix(in srgb, var(--surface-base) 80%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom-color: var(--border-subtle);
+  }
+  .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .wordmark {
+    font-family: var(--font-display); font-weight: 900; font-size: 24px;
+    text-transform: uppercase; letter-spacing: -0.02em; color: var(--text-primary);
+  }
+  .dot { color: var(--accent); }
+  .nav__actions { display: flex; align-items: center; gap: var(--s-4); }
+  .nav__lang {
+    font-family: var(--font-body); font-weight: 700; font-size: 13px; letter-spacing: 0.08em;
+    color: var(--text-muted); min-height: 44px; display: inline-flex; align-items: center;
+  }
+  .nav__lang:hover { color: var(--text-primary); }
+</style>
