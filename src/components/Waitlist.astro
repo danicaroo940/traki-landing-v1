@@ -1,0 +1,69 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const endpoint = import.meta.env.PUBLIC_WAITLIST_ENDPOINT ?? '';
+---
+<section id="waitlist" class="waitlist">
+  <div class="container">
+    <div class="card card-accent waitlist__card" data-reveal>
+      <h2 class="display-md">{t('waitlist.title')}</h2>
+      <p class="waitlist__body">{t('waitlist.body')}</p>
+      <form class="waitlist__form" data-waitlist-form data-endpoint={endpoint}>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="waitlist__hp" aria-hidden="true" />
+        <input
+          type="email" required
+          class="waitlist__input" data-waitlist-email
+          placeholder={t('waitlist.placeholder')}
+          aria-label={t('waitlist.placeholder')}
+        />
+        <button type="submit" class="btn btn-primary">{t('waitlist.cta')}</button>
+      </form>
+      <p class="waitlist__status" data-waitlist-status
+         data-success={t('waitlist.success')} data-error={t('waitlist.error')} role="status" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .waitlist { padding-block: var(--s-12); }
+  .waitlist__card { display: flex; flex-direction: column; gap: var(--s-4); padding: var(--s-9) var(--s-8); text-align: center; align-items: center; }
+  .waitlist__body { color: var(--text-secondary); margin: 0; }
+  .waitlist__form { display: flex; gap: var(--s-3); width: 100%; max-width: 460px; margin-top: var(--s-3); }
+  .waitlist__hp { position: absolute; left: -9999px; width: 1px; height: 1px; }
+  .waitlist__input {
+    flex: 1; min-height: 44px; padding: 12px 16px; border-radius: var(--r-sm);
+    background: var(--surface-input); border: 1px solid var(--border-subtle);
+    color: var(--text-primary); font-family: var(--font-mono); font-size: 15px;
+  }
+  .waitlist__input:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(57,255,92,0.15); }
+  .waitlist__status { min-height: 20px; margin: 0; font-size: 14px; }
+  .waitlist__status[data-state="ok"] { color: var(--accent); }
+  .waitlist__status[data-state="err"] { color: var(--danger); }
+  @media (max-width: 520px) { .waitlist__form { flex-direction: column; } }
+</style>
+
+<script>
+  import { isValidEmail, submitWaitlist } from '../lib/waitlist';
+  const form = document.querySelector<HTMLFormElement>('[data-waitlist-form]');
+  const email = document.querySelector<HTMLInputElement>('[data-waitlist-email]');
+  const status = document.querySelector<HTMLElement>('[data-waitlist-status]');
+  const hp = document.querySelector<HTMLInputElement>('[name="_gotcha"]');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!email || !status) return;
+    if (hp && hp.value) return; // bot filled honeypot
+    if (!isValidEmail(email.value)) {
+      status.dataset.state = 'err';
+      status.textContent = status.dataset.error ?? '';
+      return;
+    }
+    const endpoint = form.dataset.endpoint ?? '';
+    const { ok } = endpoint ? await submitWaitlist(endpoint, email.value) : { ok: false };
+    status.dataset.state = ok ? 'ok' : 'err';
+    status.textContent = (ok ? status.dataset.success : status.dataset.error) ?? '';
+    if (ok) form.reset();
+  });
+</script>

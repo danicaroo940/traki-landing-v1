@@ -1,0 +1,30 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const stats = [
+  { to: 250000, suffix: '+', label: t('counters.workouts') },
+  { to: 48000,  suffix: '+', label: t('counters.macros') },
+  { to: 12000,  suffix: '+', label: t('counters.prs') },
+];
+---
+<section class="counters">
+  <div class="container counters__grid">
+    {stats.map((s) => (
+      <div class="counters__item" data-reveal>
+        <span class="numeric counters__value" data-count-to={s.to} data-count-suffix={s.suffix}>0</span>
+        <span class="label counters__label">{s.label}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .counters { padding-block: var(--s-10); border-block: 1px solid var(--border-subtle); }
+  .counters__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-8); text-align: center; }
+  .counters__value { display: block; color: var(--accent); font-size: clamp(40px, 6vw, 64px); line-height: 1; }
+  .counters__label { display: block; margin-top: var(--s-3); }
+  @media (max-width: 640px) { .counters__grid { grid-template-columns: 1fr; gap: var(--s-6); } }
+</style>

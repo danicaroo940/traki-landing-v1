@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Hero from '../../components/Hero.astro';
+import Feature from '../../components/Feature.astro';
+import Counters from '../../components/Counters.astro';
+import Waitlist from '../../components/Waitlist.astro';
+import Footer from '../../components/Footer.astro';
+import { useTranslations } from '../../i18n/ui';
+const lang = 'es' as const;
+const t = useTranslations(lang);
+---
+<Base lang={lang} title="TRAKI — Sin atajos. Solo reps." description={t('hero.subtitle')}>
+  <Nav lang={lang} />
+  <main>
+    <Hero lang={lang} />
+    <Feature eyebrow={t('feat.analyze.eyebrow')} title={t('feat.analyze.title')} titleAccent={t('feat.analyze.titleAccent')} body={t('feat.analyze.body')} src="/screens/screenshot_1.png" alt={t('feat.analyze.eyebrow')} />
+    <Feature eyebrow={t('feat.goals.eyebrow')} title={t('feat.goals.title')} titleAccent={t('feat.goals.titleAccent')} body={t('feat.goals.body')} src="/screens/screenshot_2.png" alt={t('feat.goals.eyebrow')} reverse />
+    <Feature eyebrow={t('feat.strength.eyebrow')} title={t('feat.strength.title')} titleAccent={t('feat.strength.titleAccent')} body={t('feat.strength.body')} src="/screens/screenshot_3.png" alt={t('feat.strength.eyebrow')} />
+    <Feature eyebrow={t('feat.coach.eyebrow')} title={t('feat.coach.title')} titleAccent={t('feat.coach.titleAccent')} body={t('feat.coach.body')} src="/screens/screenshot_4.png" alt={t('feat.coach.eyebrow')} reverse />
+    <Counters lang={lang} />
+    <Waitlist lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Base>
+<script>import '../../scripts/animations.ts';</script>

@@ -1,0 +1,51 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const line1 = t('hero.title.1');
+const line2 = t('hero.title.2');
+---
+<section class="hero">
+  <div class="container hero__grid">
+    <div class="hero__text">
+      <h1 class="display-xl hero__title" data-hero-title>
+        <span class="hero__line">{line1}</span>
+        <span class="hero__line accent">{line2}</span>
+      </h1>
+      <p class="hero__subtitle" data-reveal>{t('hero.subtitle')}</p>
+      <a class="btn btn-primary hero__cta" data-reveal href="#waitlist">{t('hero.cta')}</a>
+    </div>
+    <div class="hero__media" data-hero-phone>
+      <video
+        class="hero__video"
+        autoplay muted loop playsinline
+        poster="/videos/hero-poster.jpg"
+        aria-hidden="true"
+      >
+        <source src="/videos/hero.webm" type="video/webm" />
+        <source src="/videos/hero.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { padding-block: var(--s-12) var(--s-11); }
+  .hero__grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--s-10); align-items: center; }
+  .hero__text { display: flex; flex-direction: column; gap: var(--s-6); }
+  .hero__title { display: flex; flex-direction: column; }
+  .hero__subtitle { color: var(--text-secondary); font-size: 20px; max-width: 40ch; margin: 0; }
+  .hero__cta { align-self: flex-start; }
+  .hero__media {
+    position: relative; border-radius: var(--r-2xl); overflow: hidden;
+    border: 1px solid var(--accent); box-shadow: var(--glow-volt-strong);
+    max-width: 320px; margin-inline: auto;
+  }
+  .hero__video { width: 100%; aspect-ratio: 1080 / 1920; background: var(--surface-raised); }
+  @media (max-width: 860px) {
+    .hero__grid { grid-template-columns: 1fr; }
+    .hero__cta { align-self: stretch; }
+  }
+</style>
