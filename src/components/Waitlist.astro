@@ -44,3 +44,26 @@ const endpoint = import.meta.env.PUBLIC_WAITLIST_ENDPOINT ?? '';
   .waitlist__status[data-state="err"] { color: var(--danger); }
   @media (max-width: 520px) { .waitlist__form { flex-direction: column; } }
 </style>
+
+<script>
+  import { isValidEmail, submitWaitlist } from '../lib/waitlist';
+  const form = document.querySelector<HTMLFormElement>('[data-waitlist-form]');
+  const email = document.querySelector<HTMLInputElement>('[data-waitlist-email]');
+  const status = document.querySelector<HTMLElement>('[data-waitlist-status]');
+  const hp = document.querySelector<HTMLInputElement>('[name="_gotcha"]');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!email || !status) return;
+    if (hp && hp.value) return; // bot filled honeypot
+    if (!isValidEmail(email.value)) {
+      status.dataset.state = 'err';
+      status.textContent = status.dataset.error ?? '';
+      return;
+    }
+    const endpoint = form.dataset.endpoint ?? '';
+    const { ok } = endpoint ? await submitWaitlist(endpoint, email.value) : { ok: true };
+    status.dataset.state = ok ? 'ok' : 'err';
+    status.textContent = (ok ? status.dataset.success : status.dataset.error) ?? '';
+    if (ok) form.reset();
+  });
+</script>
