@@ -44,3 +44,9 @@ const t = useTranslations(lang);
   <Footer lang={lang} />
 </Base>
 <script>import '../../scripts/animations.ts';</script>
+<style>
+  /* Each Feature block already carries its own padding-block, so the wrapper's
+     bottom padding double-stacks with it against the next section. Drop it and
+     keep only the top padding, which gives the section head its lead-in space. */
+  #features { padding-bottom: 0; }
+</style>

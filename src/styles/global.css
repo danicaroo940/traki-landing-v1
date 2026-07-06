@@ -22,6 +22,7 @@ body {
 }
 img, video { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
+a:focus-visible { outline: none; box-shadow: var(--glow-volt); border-radius: var(--r-sm); }
 
 .container { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: var(--s-6); }
 

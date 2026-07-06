@@ -33,10 +33,10 @@ const items = ['1', '2', '3', '4', '5'];
   .faq__list { display: flex; flex-direction: column; gap: var(--s-3); }
   .faq__item {
     background: var(--surface-raised); border: 1px solid var(--border-subtle);
-    border-radius: var(--r-lg); padding: 0 var(--s-6);
+    border-radius: var(--r-xl); padding: 0 var(--s-6);
     transition: border-color var(--dur-med) var(--ease-out);
   }
-  .faq__item[open] { border-color: var(--border-strong); }
+  .faq__item:hover, .faq__item[open] { border-color: var(--accent); }
   .faq__q {
     display: flex; align-items: center; justify-content: space-between; gap: var(--s-4);
     cursor: pointer; list-style: none; padding: var(--s-5) 0;
