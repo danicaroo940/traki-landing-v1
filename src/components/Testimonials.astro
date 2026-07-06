@@ -1,0 +1,58 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const quotes = ['1', '2', '3'];
+---
+<section class="section testimonials">
+  <div class="container">
+    <div class="section__head" data-reveal>
+      <p class="eyebrow">{t('test.eyebrow')}</p>
+      <h2 class="display-lg">{t('test.title')} <span class="accent">{t('test.titleAccent')}</span></h2>
+    </div>
+    <div class="testimonials__grid">
+      {quotes.map((q) => (
+        <figure class="testimonial" data-reveal>
+          <div class="testimonial__stars" aria-label="5/5">
+            {[0, 1, 2, 3, 4].map(() => (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/>
+              </svg>
+            ))}
+          </div>
+          <blockquote class="testimonial__quote">{t(`test.${q}.quote`)}</blockquote>
+          <figcaption class="testimonial__by">
+            <span class="testimonial__avatar" aria-hidden="true">{t(`test.${q}.name`).charAt(0)}</span>
+            <span>
+              <strong class="testimonial__name">{t(`test.${q}.name`)}</strong>
+              <span class="testimonial__role">{t(`test.${q}.role`)}</span>
+            </span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
+  .testimonial {
+    background: var(--surface-raised); border: 1px solid var(--border-subtle);
+    border-radius: var(--r-xl); padding: var(--s-7) var(--s-6); margin: 0;
+    display: flex; flex-direction: column; gap: var(--s-4);
+  }
+  .testimonial__stars { display: flex; gap: 2px; color: var(--accent); }
+  .testimonial__quote { margin: 0; font-size: 17px; line-height: 1.6; color: var(--text-primary); }
+  .testimonial__by { display: flex; align-items: center; gap: var(--s-3); margin-top: auto; }
+  .testimonial__avatar {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: var(--r-pill); flex-shrink: 0;
+    background: rgba(57,255,92,0.12); border: 1px solid rgba(57,255,92,0.35);
+    color: var(--accent); font-family: var(--font-display); font-weight: 800; font-size: 18px;
+  }
+  .testimonial__name { display: block; font-size: 15px; color: var(--text-primary); }
+  .testimonial__role { display: block; font-size: 13px; color: var(--text-muted); }
+  @media (max-width: 860px) { .testimonials__grid { grid-template-columns: 1fr; } }
+</style>

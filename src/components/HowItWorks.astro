@@ -1,0 +1,40 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const steps = ['1', '2', '3'];
+---
+<section id="how" class="section how">
+  <div class="container">
+    <div class="section__head" data-reveal>
+      <p class="eyebrow">{t('how.eyebrow')}</p>
+      <h2 class="display-lg">{t('how.title')} <span class="accent">{t('how.titleAccent')}</span></h2>
+    </div>
+    <ol class="how__grid">
+      {steps.map((s) => (
+        <li class="how__step" data-reveal>
+          <span class="how__num numeric">{t(`how.${s}.n`)}</span>
+          <h3 class="how__title">{t(`how.${s}.title`)}</h3>
+          <p class="how__body">{t(`how.${s}.body`)}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .how__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); counter-reset: none; }
+  .how__step {
+    position: relative; background: var(--surface-raised); border: 1px solid var(--border-subtle);
+    border-radius: var(--r-xl); padding: var(--s-7) var(--s-6);
+    display: flex; flex-direction: column; gap: var(--s-3);
+    transition: border-color var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
+  }
+  .how__step:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .how__num { font-size: 44px; line-height: 1; color: var(--accent); }
+  .how__title { font-family: var(--font-body); font-weight: 700; font-size: 20px; margin: var(--s-2) 0 0; }
+  .how__body { color: var(--text-secondary); font-size: 16px; line-height: 1.6; margin: 0; }
+  @media (max-width: 860px) { .how__grid { grid-template-columns: 1fr; } }
+</style>

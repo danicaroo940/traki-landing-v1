@@ -5,27 +5,46 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const other = oppositeLang(lang);
+const year = 2026;
 ---
 <footer class="footer">
   <div class="container footer__inner">
-    <div>
+    <div class="footer__brand">
       <a href={`/${lang}/`} class="wordmark">TRAKI<span class="dot">.</span></a>
       <p class="footer__tagline">{t('footer.tagline')}</p>
     </div>
-    <nav class="footer__links">
+    <nav class="footer__col">
+      <p class="footer__heading">{t('footer.col.product')}</p>
+      <a href="#features">{t('footer.link.features')}</a>
+      <a href="#how">{t('footer.link.how')}</a>
+      <a href="#faq">{t('footer.link.faq')}</a>
+      <a href="#waitlist">{t('footer.link.waitlist')}</a>
+    </nav>
+    <nav class="footer__col">
+      <p class="footer__heading">{t('footer.col.company')}</p>
       <a href="/privacy_policy.html">{t('footer.privacy')}</a>
       <a href={`/${other}/`}>{other.toUpperCase()}</a>
     </nav>
   </div>
+  <div class="container footer__bottom">
+    <span>© {year} TRAKI. {t('footer.rights')}</span>
+  </div>
 </footer>
 
 <style>
-  .footer { border-top: 1px solid var(--border-subtle); padding-block: var(--s-9); }
-  .footer__inner { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--s-6); flex-wrap: wrap; }
-  .wordmark { font-family: var(--font-display); font-weight: 900; font-size: 20px; text-transform: uppercase; letter-spacing: -0.02em; }
+  .footer { border-top: 1px solid var(--border-subtle); padding-block: var(--s-10) var(--s-7); }
+  .footer__inner {
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--s-8);
+    padding-bottom: var(--s-9); border-bottom: 1px solid var(--border-subtle);
+  }
+  .footer__brand { max-width: 34ch; }
+  .wordmark { font-family: var(--font-display); font-weight: 900; font-size: 24px; text-transform: uppercase; letter-spacing: -0.02em; }
   .dot { color: var(--accent); }
-  .footer__tagline { color: var(--text-muted); font-size: 14px; margin: var(--s-2) 0 0; }
-  .footer__links { display: flex; gap: var(--s-6); }
-  .footer__links a { color: var(--text-secondary); font-size: 14px; min-height: 44px; display: inline-flex; align-items: center; }
-  .footer__links a:hover { color: var(--text-primary); }
+  .footer__tagline { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin: var(--s-3) 0 0; }
+  .footer__col { display: flex; flex-direction: column; }
+  .footer__heading { font-family: var(--font-body); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); margin: 0 0 var(--s-2); }
+  .footer__col a { color: var(--text-secondary); font-size: 15px; min-height: 40px; display: inline-flex; align-items: center; transition: color var(--dur-fast) var(--ease-out); }
+  .footer__col a:hover { color: var(--accent); }
+  .footer__bottom { padding-top: var(--s-6); color: var(--text-muted); font-size: 13px; }
+  @media (max-width: 720px) { .footer__inner { grid-template-columns: 1fr 1fr; } .footer__brand { grid-column: 1 / -1; } }
 </style>

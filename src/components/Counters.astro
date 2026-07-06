@@ -18,13 +18,19 @@ const stats = [
         <span class="label counters__label">{s.label}</span>
       </div>
     ))}
+    <div class="counters__item" data-reveal>
+      <span class="numeric counters__value">4.9<span class="counters__unit">/5</span></span>
+      <span class="label counters__label">{t('counters.rating')}</span>
+    </div>
   </div>
 </section>
 
 <style>
-  .counters { padding-block: var(--s-10); border-block: 1px solid var(--border-subtle); }
-  .counters__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-8); text-align: center; }
-  .counters__value { display: block; color: var(--accent); font-size: clamp(40px, 6vw, 64px); line-height: 1; }
+  .counters { padding-block: var(--s-11); border-block: 1px solid var(--border-subtle); background: var(--surface-raised); }
+  .counters__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-8); text-align: center; }
+  .counters__value { display: block; color: var(--accent); font-size: clamp(40px, 5.5vw, 60px); line-height: 1; }
+  .counters__unit { font-size: 0.5em; color: var(--text-muted); }
   .counters__label { display: block; margin-top: var(--s-3); }
-  @media (max-width: 640px) { .counters__grid { grid-template-columns: 1fr; gap: var(--s-6); } }
+  @media (max-width: 860px) { .counters__grid { grid-template-columns: 1fr 1fr; gap: var(--s-8) var(--s-6); } }
+  @media (max-width: 420px) { .counters__grid { grid-template-columns: 1fr; gap: var(--s-6); } }
 </style>

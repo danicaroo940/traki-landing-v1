@@ -9,6 +9,11 @@ const other = oppositeLang(lang);
 <header class="nav" data-nav>
   <div class="container nav__inner">
     <a href={`/${lang}/`} class="wordmark" aria-label="TRAKI">TRAKI<span class="dot">.</span></a>
+    <nav class="nav__links">
+      <a href="#features">{t('nav.features')}</a>
+      <a href="#how">{t('nav.how')}</a>
+      <a href="#faq">{t('nav.faq')}</a>
+    </nav>
     <nav class="nav__actions">
       <a class="nav__lang" href={`/${other}/`} aria-label={`Switch to ${other.toUpperCase()}`}>{other.toUpperCase()}</a>
       <a class="btn btn-primary nav__cta" href="#waitlist">{t('nav.cta')}</a>
@@ -33,7 +38,15 @@ const other = oppositeLang(lang);
     text-transform: uppercase; letter-spacing: -0.02em; color: var(--text-primary);
   }
   .dot { color: var(--accent); }
+  .nav__links { display: flex; align-items: center; gap: var(--s-7); }
+  .nav__links a {
+    font-family: var(--font-body); font-weight: 600; font-size: 14px; color: var(--text-secondary);
+    min-height: 44px; display: inline-flex; align-items: center;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .nav__links a:hover { color: var(--text-primary); }
   .nav__actions { display: flex; align-items: center; gap: var(--s-4); }
+  @media (max-width: 760px) { .nav__links { display: none; } }
   .nav__lang {
     font-family: var(--font-body); font-weight: 700; font-size: 13px; letter-spacing: 0.08em;
     color: var(--text-muted); min-height: 44px; display: inline-flex; align-items: center;

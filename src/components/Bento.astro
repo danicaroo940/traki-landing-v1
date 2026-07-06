@@ -1,0 +1,40 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const items = ['1', '2', '3', '4', '5', '6'];
+---
+<section class="section bento">
+  <div class="container">
+    <div class="section__head" data-reveal>
+      <p class="eyebrow">{t('bento.eyebrow')}</p>
+      <h2 class="display-lg">{t('bento.title')} <span class="accent">{t('bento.titleAccent')}</span></h2>
+    </div>
+    <div class="bento__grid">
+      {items.map((i) => (
+        <article class="bento__card" data-reveal>
+          <h3 class="bento__title">{t(`bento.${i}.title`)}</h3>
+          <p class="bento__body">{t(`bento.${i}.body`)}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .bento__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
+  .bento__card {
+    background: var(--surface-raised); border: 1px solid var(--border-subtle);
+    border-radius: var(--r-lg); padding: var(--s-6);
+    display: flex; flex-direction: column; gap: var(--s-2);
+    transition: border-color var(--dur-med) var(--ease-out), background var(--dur-med) var(--ease-out);
+  }
+  .bento__card:hover { border-color: var(--accent); background: var(--surface-higher); }
+  .bento__title { font-family: var(--font-body); font-weight: 700; font-size: 18px; margin: 0; }
+  .bento__title::before { content: ''; display: block; width: 28px; height: 3px; background: var(--accent); border-radius: var(--r-pill); margin-bottom: var(--s-3); }
+  .bento__body { color: var(--text-secondary); font-size: 15px; line-height: 1.6; margin: 0; }
+  @media (max-width: 860px) { .bento__grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .bento__grid { grid-template-columns: 1fr; } }
+</style>

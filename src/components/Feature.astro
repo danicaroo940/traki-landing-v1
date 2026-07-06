@@ -2,18 +2,30 @@
 import PhoneMock from './PhoneMock.astro';
 interface Props {
   eyebrow: string; title: string; titleAccent?: string; body: string;
-  src: string; alt: string; reverse?: boolean;
+  bullets?: string[]; src: string; alt: string; reverse?: boolean;
 }
-const { eyebrow, title, titleAccent, body, src, alt, reverse = false } = Astro.props;
+const { eyebrow, title, titleAccent, body, bullets = [], src, alt, reverse = false } = Astro.props;
 ---
 <section class={`feature ${reverse ? 'feature--reverse' : ''}`}>
   <div class="container feature__grid">
     <div class="feature__text">
-      <p class="label" data-reveal>{eyebrow}</p>
+      <p class="eyebrow" data-reveal>{eyebrow}</p>
       <h2 class="display-md" data-reveal>
         {title}{titleAccent ? <> <span class="accent">{titleAccent}</span></> : null}
       </h2>
       <p class="feature__body" data-reveal>{body}</p>
+      {bullets.length > 0 && (
+        <ul class="feature__list" data-reveal>
+          {bullets.map((b) => (
+            <li class="feature__item">
+              <svg class="feature__check" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
     <div class="feature__media">
       <PhoneMock src={src} alt={alt} />
@@ -28,7 +40,14 @@ const { eyebrow, title, titleAccent, body, src, alt, reverse = false } = Astro.p
   }
   .feature--reverse .feature__media { order: -1; }
   .feature__text { display: flex; flex-direction: column; gap: var(--s-4); }
-  .feature__body { color: var(--text-secondary); font-size: 18px; max-width: 44ch; margin: 0; }
+  .feature__body { color: var(--text-secondary); font-size: 18px; line-height: 1.6; max-width: 46ch; margin: 0; }
+  .feature__list { list-style: none; padding: 0; margin: var(--s-3) 0 0; display: flex; flex-direction: column; gap: var(--s-3); }
+  .feature__item { display: flex; align-items: flex-start; gap: var(--s-3); font-size: 16px; color: var(--text-primary); }
+  .feature__check {
+    flex-shrink: 0; color: var(--accent); margin-top: 1px;
+    background: rgba(57,255,92,0.10); border-radius: var(--r-sm); padding: 2px;
+    box-sizing: content-box; width: 16px; height: 16px;
+  }
   @media (max-width: 860px) {
     .feature__grid { grid-template-columns: 1fr; gap: var(--s-8); }
     .feature--reverse .feature__media { order: 0; }
