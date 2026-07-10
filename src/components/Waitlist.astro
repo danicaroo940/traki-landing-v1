@@ -45,6 +45,10 @@ const endpoint = import.meta.env.PUBLIC_WAITLIST_ENDPOINT ?? '';
   .waitlist__status { min-height: 20px; margin: 0; font-size: 14px; }
   .waitlist__status[data-state="ok"] { color: var(--accent); }
   .waitlist__status[data-state="err"] { color: var(--danger); }
+  @media (max-width: 860px) {
+    .waitlist { padding-block: var(--s-10); }
+    .waitlist__card { padding: var(--s-8) var(--s-6); }
+  }
   @media (max-width: 520px) { .waitlist__form { flex-direction: column; } }
 </style>
 

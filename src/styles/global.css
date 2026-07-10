@@ -65,6 +65,10 @@ a:focus-visible { outline: none; box-shadow: var(--glow-volt); border-radius: va
 /* Section scaffold — big block layout, 48px+ rhythm */
 .section { padding-block: var(--s-12); }
 .section--tight { padding-block: var(--s-11); }
+@media (max-width: 860px) {
+  .section, .section--tight { padding-block: var(--s-10); }
+  .section__head { margin-bottom: var(--s-8); }
+}
 .section__head { max-width: 62ch; margin: 0 auto var(--s-10); text-align: center; display: flex; flex-direction: column; gap: var(--s-4); align-items: center; }
 .section__head--left { text-align: left; margin-inline: 0; align-items: flex-start; }
 .eyebrow {

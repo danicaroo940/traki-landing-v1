@@ -8,8 +8,9 @@ const line1 = t('hero.title.1');
 const line2 = t('hero.title.2');
 const trust = ['hero.trust.1', 'hero.trust.2', 'hero.trust.3', 'hero.trust.4'];
 ---
-<section class="hero">
-  <div class="hero__glow" aria-hidden="true"></div>
+<section class="hero" data-hero>
+  <div class="hero__glow" aria-hidden="true" data-hero-glow></div>
+  <div class="hero__gridlines" aria-hidden="true" data-hero-gridlines></div>
   <div class="container hero__grid">
     <div class="hero__text">
       <span class="hero__badge" data-reveal>{t('hero.badge')}</span>
@@ -19,8 +20,8 @@ const trust = ['hero.trust.1', 'hero.trust.2', 'hero.trust.3', 'hero.trust.4'];
       </h1>
       <p class="hero__subtitle" data-reveal>{t('hero.subtitle')}</p>
       <div class="hero__actions" data-reveal>
-        <a class="btn btn-primary btn-lg hero__cta" href="#waitlist">{t('hero.cta')}</a>
-        <a class="btn btn-secondary btn-lg" href="#how">{t('hero.cta2')}</a>
+        <a class="btn btn-primary btn-lg hero__cta" href="#waitlist" data-magnetic>{t('hero.cta')}</a>
+        <a class="btn btn-secondary btn-lg" href="#how" data-magnetic>{t('hero.cta2')}</a>
       </div>
       <ul class="hero__trust" data-reveal>
         {trust.map((k) => (
@@ -30,16 +31,19 @@ const trust = ['hero.trust.1', 'hero.trust.2', 'hero.trust.3', 'hero.trust.4'];
         ))}
       </ul>
     </div>
-    <div class="hero__media" data-hero-phone>
-      <video
-        class="hero__video"
-        autoplay muted loop playsinline
-        poster="/videos/hero-poster.jpg"
-        aria-hidden="true"
-      >
-        <source src="/videos/hero.webm" type="video/webm" />
-        <source src="/videos/hero.mp4" type="video/mp4" />
-      </video>
+    <div class="hero__media-wrap" data-hero-phone data-tilt>
+      <div class="hero__media" data-tilt-inner>
+        <video
+          class="hero__video"
+          autoplay muted loop playsinline
+          poster="/videos/hero-poster.jpg"
+          aria-hidden="true"
+        >
+          <source src="/videos/hero.webm" type="video/webm" />
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
+        <span class="hero__media-sheen" aria-hidden="true"></span>
+      </div>
     </div>
   </div>
 </section>
@@ -49,7 +53,16 @@ const trust = ['hero.trust.1', 'hero.trust.2', 'hero.trust.3', 'hero.trust.4'];
   .hero__glow {
     position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
     width: 900px; height: 900px; pointer-events: none;
-    background: radial-gradient(circle, rgba(57,255,92,0.10) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(57,255,92,0.12) 0%, transparent 60%);
+  }
+  .hero__gridlines {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at 50% 0%, black 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, black 20%, transparent 75%);
   }
   .hero__grid {
     position: relative; display: grid; grid-template-columns: 1.15fr 0.85fr;
@@ -69,15 +82,24 @@ const trust = ['hero.trust.1', 'hero.trust.2', 'hero.trust.3', 'hero.trust.4'];
   .hero__trust { list-style: none; display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-5); padding: 0; margin: var(--s-2) 0 0; }
   .hero__chip { display: inline-flex; align-items: center; gap: var(--s-2); font-size: 14px; color: var(--text-secondary); }
   .hero__chip-dot { width: 6px; height: 6px; border-radius: var(--r-pill); background: var(--accent); box-shadow: 0 0 8px rgba(57,255,92,0.6); }
+  .hero__media-wrap { perspective: 1000px; max-width: 320px; margin-inline: auto; width: 100%; }
   .hero__media {
     position: relative; border-radius: var(--r-2xl); overflow: hidden;
     border: 1px solid var(--accent); box-shadow: var(--glow-volt-strong);
-    max-width: 320px; margin-inline: auto;
+    transform-style: preserve-3d; will-change: transform;
+  }
+  .hero__media-sheen {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(125deg, rgba(255,255,255,0.10) 0%, transparent 38%);
   }
   .hero__video { width: 100%; aspect-ratio: 1080 / 1920; background: var(--surface-raised); }
   @media (max-width: 860px) {
-    .hero__grid { grid-template-columns: 1fr; }
+    .hero { padding-block: var(--s-9) var(--s-10); }
+    .hero__grid { grid-template-columns: 1fr; gap: var(--s-8); }
     .hero__actions { flex-direction: column; align-items: stretch; }
-    .hero__media { grid-row: 1; max-width: 260px; }
+    /* Message first, phone after — don't make people scroll past a video
+       to read the headline. */
+    .hero__media-wrap { max-width: 260px; }
+    .hero__subtitle { font-size: 18px; }
   }
 </style>

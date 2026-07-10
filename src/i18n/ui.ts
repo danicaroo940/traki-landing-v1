@@ -4,11 +4,17 @@ export const languages: Record<Lang, string> = { es: 'ES', en: 'EN' };
 
 export const ui: Record<Lang, Record<string, string>> = {
   es: {
+    // Meta
+    'meta.title': 'TRAKI — Fuerza y nutrición con IA · Sin atajos. Solo reps.',
+    'meta.description': 'Entrena fuerza y controla tus macros en una sola app. Calorías con IA desde una foto, series por tu RM y coach 24/7. Únete a la lista de espera.',
+
     // Nav
     'nav.features': 'Funciones',
     'nav.how': 'Cómo funciona',
     'nav.faq': 'FAQ',
     'nav.cta': 'Únete',
+    'nav.menu.open': 'Abrir menú',
+    'nav.menu.close': 'Cerrar menú',
 
     // Hero
     'hero.badge': 'Fuerza + Nutrición · Una sola app',
@@ -55,6 +61,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     'feat.analyze.b1': 'Foto, código de barras o búsqueda por nombre',
     'feat.analyze.b2': 'Estimación de porción y macros con IA',
     'feat.analyze.b3': 'Historial completo con calorías por comida',
+    'feat.analyze.alt': 'Pantalla de TRAKI: escáner de comida con IA que estima calorías y macros desde una foto',
 
     'feat.goals.eyebrow': 'Metas diarias',
     'feat.goals.title': 'Controla tus',
@@ -63,6 +70,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     'feat.goals.b1': 'Meta de kcal y macros personalizable',
     'feat.goals.b2': 'Anillos de progreso en tiempo real',
     'feat.goals.b3': 'Gráfico de los últimos 7 días',
+    'feat.goals.alt': 'Pantalla de TRAKI: metas diarias de calorías y macros con anillos de progreso',
 
     'feat.strength.eyebrow': 'Programa de fuerza',
     'feat.strength.title': 'Entrena',
@@ -71,6 +79,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     'feat.strength.b1': 'Series calculadas por tu RM',
     'feat.strength.b2': 'Registro serie a serie con check',
     'feat.strength.b3': 'Progreso por semana y día',
+    'feat.strength.alt': 'Pantalla de TRAKI: programa de fuerza con series calculadas por repetición máxima',
 
     'feat.coach.eyebrow': 'Coach IA',
     'feat.coach.title': 'Tu',
@@ -79,6 +88,28 @@ export const ui: Record<Lang, Record<string, string>> = {
     'feat.coach.b1': 'Planes semanales personalizados',
     'feat.coach.b2': 'Cálculo de TDEE y objetivos',
     'feat.coach.b3': 'Intercambios y listas de compra',
+    'feat.coach.alt': 'Pantalla de TRAKI: chat con el coach nutricional de IA generando un plan semanal',
+
+    // Marquee
+    'marquee.1': 'Sin atajos',
+    'marquee.2': 'Solo reps',
+    'marquee.3': 'Cero excusas',
+    'marquee.4': 'Macros con IA',
+    'marquee.5': 'Rompe PRs',
+    'marquee.6': 'Registra en segundos',
+
+    // Gallery
+    'gallery.eyebrow': 'Dentro de la app',
+    'gallery.title': 'Así se ve',
+    'gallery.titleAccent': 'el progreso',
+    'gallery.1.title': 'Escáner IA',
+    'gallery.1.body': 'Foto → macros en segundos',
+    'gallery.2.title': 'Metas diarias',
+    'gallery.2.body': 'Anillos de progreso en vivo',
+    'gallery.3.title': 'Fuerza por RM',
+    'gallery.3.body': 'Series calculadas, PRs registrados',
+    'gallery.4.title': 'Coach IA',
+    'gallery.4.body': 'Planes que sí responden',
 
     // Bento capabilities
     'bento.eyebrow': 'Y además',
@@ -152,13 +183,22 @@ export const ui: Record<Lang, Record<string, string>> = {
     'footer.link.waitlist': 'Lista de espera',
     'footer.privacy': 'Privacidad',
     'footer.rights': 'Todos los derechos reservados.',
+    'footer.cta.eyebrow': '¿Listo para entrenar en serio?',
+    'footer.cta.button': 'Entra a la lista',
+    'footer.backTop': 'Volver arriba',
   },
   en: {
+    // Meta
+    'meta.title': 'TRAKI — AI Strength & Macros App · No shortcuts. Just reps.',
+    'meta.description': 'Train strength and track macros in one app. AI calories from a photo, sets calculated from your 1RM, and a 24/7 AI coach. Join the waitlist.',
+
     // Nav
     'nav.features': 'Features',
     'nav.how': 'How it works',
     'nav.faq': 'FAQ',
     'nav.cta': 'Join',
+    'nav.menu.open': 'Open menu',
+    'nav.menu.close': 'Close menu',
 
     // Hero
     'hero.badge': 'Strength + Nutrition · One app',
@@ -205,6 +245,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     'feat.analyze.b1': 'Photo, barcode or search by name',
     'feat.analyze.b2': 'AI portion and macro estimation',
     'feat.analyze.b3': 'Full history with calories per meal',
+    'feat.analyze.alt': 'TRAKI app screen: AI food scanner estimating calories and macros from a photo',
 
     'feat.goals.eyebrow': 'Daily goals',
     'feat.goals.title': 'Own your',
@@ -213,6 +254,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     'feat.goals.b1': 'Custom kcal and macro targets',
     'feat.goals.b2': 'Real-time progress rings',
     'feat.goals.b3': 'Last 7 days chart',
+    'feat.goals.alt': 'TRAKI app screen: daily calorie and macro goals with progress rings',
 
     'feat.strength.eyebrow': 'Strength program',
     'feat.strength.title': 'Train',
@@ -221,6 +263,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     'feat.strength.b1': 'Sets calculated from your 1RM',
     'feat.strength.b2': 'Set-by-set logging with checks',
     'feat.strength.b3': 'Progress by week and day',
+    'feat.strength.alt': 'TRAKI app screen: strength program with sets calculated from your one-rep max',
 
     'feat.coach.eyebrow': 'AI coach',
     'feat.coach.title': 'Your',
@@ -229,6 +272,28 @@ export const ui: Record<Lang, Record<string, string>> = {
     'feat.coach.b1': 'Personalized weekly plans',
     'feat.coach.b2': 'TDEE and goal calculation',
     'feat.coach.b3': 'Food swaps and shopping lists',
+    'feat.coach.alt': 'TRAKI app screen: chat with the AI nutrition coach generating a weekly plan',
+
+    // Marquee
+    'marquee.1': 'No shortcuts',
+    'marquee.2': 'Just reps',
+    'marquee.3': 'Zero excuses',
+    'marquee.4': 'AI macros',
+    'marquee.5': 'Break PRs',
+    'marquee.6': 'Log in seconds',
+
+    // Gallery
+    'gallery.eyebrow': 'Inside the app',
+    'gallery.title': 'What progress',
+    'gallery.titleAccent': 'looks like',
+    'gallery.1.title': 'AI scanner',
+    'gallery.1.body': 'Photo → macros in seconds',
+    'gallery.2.title': 'Daily goals',
+    'gallery.2.body': 'Live progress rings',
+    'gallery.3.title': 'Strength by 1RM',
+    'gallery.3.body': 'Calculated sets, logged PRs',
+    'gallery.4.title': 'AI coach',
+    'gallery.4.body': 'Plans that actually answer',
 
     // Bento capabilities
     'bento.eyebrow': 'And more',
@@ -302,6 +367,9 @@ export const ui: Record<Lang, Record<string, string>> = {
     'footer.link.waitlist': 'Waitlist',
     'footer.privacy': 'Privacy',
     'footer.rights': 'All rights reserved.',
+    'footer.cta.eyebrow': 'Ready to train for real?',
+    'footer.cta.button': 'Join the list',
+    'footer.backTop': 'Back to top',
   },
 };
 

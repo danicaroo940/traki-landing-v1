@@ -12,8 +12,8 @@ const t = useTranslations(lang);
       {t('manifesto.title')} <span class="accent">{t('manifesto.titleAccent')}</span>
     </h2>
     <div class="manifesto__body">
-      <p data-reveal>{t('manifesto.body')}</p>
-      <p data-reveal>{t('manifesto.body2')}</p>
+      <p data-scrub-text>{t('manifesto.body')}</p>
+      <p data-scrub-text>{t('manifesto.body2')}</p>
     </div>
   </div>
 </section>
@@ -24,5 +24,6 @@ const t = useTranslations(lang);
   .manifesto__title { margin: var(--s-4) 0 var(--s-7); max-width: 18ch; }
   .manifesto__body { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8); }
   .manifesto__body p { color: var(--text-secondary); font-size: 18px; line-height: 1.7; margin: 0; }
+  @media (max-width: 860px) { .manifesto { padding-block: var(--s-10); } }
   @media (max-width: 720px) { .manifesto__body { grid-template-columns: 1fr; gap: var(--s-5); } }
 </style>

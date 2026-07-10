@@ -5,6 +5,8 @@ import Hero from '../../components/Hero.astro';
 import Manifesto from '../../components/Manifesto.astro';
 import HowItWorks from '../../components/HowItWorks.astro';
 import Feature from '../../components/Feature.astro';
+import Marquee from '../../components/Marquee.astro';
+import Gallery from '../../components/Gallery.astro';
 import Bento from '../../components/Bento.astro';
 import Counters from '../../components/Counters.astro';
 import Testimonials from '../../components/Testimonials.astro';
@@ -12,15 +14,20 @@ import Faq from '../../components/Faq.astro';
 import Waitlist from '../../components/Waitlist.astro';
 import Footer from '../../components/Footer.astro';
 import { useTranslations } from '../../i18n/ui';
+import shot1 from '../../assets/screens/screenshot_1.png';
+import shot2 from '../../assets/screens/screenshot_2.png';
+import shot3 from '../../assets/screens/screenshot_3.png';
+import shot4 from '../../assets/screens/screenshot_4.png';
 const lang = 'en' as const;
 const t = useTranslations(lang);
 ---
-<Base lang={lang} title="TRAKI — No shortcuts. Just reps." description={t('hero.subtitle')}>
+<Base lang={lang} title={t('meta.title')} description={t('meta.description')}>
   <Nav lang={lang} />
   <main>
     <Hero lang={lang} />
     <Manifesto lang={lang} />
     <HowItWorks lang={lang} />
+    <Marquee lang={lang} />
 
     <div id="features" class="section section--tight">
       <div class="container">
@@ -29,12 +36,13 @@ const t = useTranslations(lang);
           <h2 class="display-lg">{t('feat.section.title')} <span class="accent">{t('feat.section.titleAccent')}</span></h2>
         </div>
       </div>
-      <Feature eyebrow={t('feat.analyze.eyebrow')} title={t('feat.analyze.title')} titleAccent={t('feat.analyze.titleAccent')} body={t('feat.analyze.body')} bullets={[t('feat.analyze.b1'), t('feat.analyze.b2'), t('feat.analyze.b3')]} src="/screens/screenshot_1.png" alt={t('feat.analyze.eyebrow')} />
-      <Feature eyebrow={t('feat.goals.eyebrow')} title={t('feat.goals.title')} titleAccent={t('feat.goals.titleAccent')} body={t('feat.goals.body')} bullets={[t('feat.goals.b1'), t('feat.goals.b2'), t('feat.goals.b3')]} src="/screens/screenshot_2.png" alt={t('feat.goals.eyebrow')} reverse />
-      <Feature eyebrow={t('feat.strength.eyebrow')} title={t('feat.strength.title')} titleAccent={t('feat.strength.titleAccent')} body={t('feat.strength.body')} bullets={[t('feat.strength.b1'), t('feat.strength.b2'), t('feat.strength.b3')]} src="/screens/screenshot_3.png" alt={t('feat.strength.eyebrow')} />
-      <Feature eyebrow={t('feat.coach.eyebrow')} title={t('feat.coach.title')} titleAccent={t('feat.coach.titleAccent')} body={t('feat.coach.body')} bullets={[t('feat.coach.b1'), t('feat.coach.b2'), t('feat.coach.b3')]} src="/screens/screenshot_4.png" alt={t('feat.coach.eyebrow')} reverse />
+      <Feature eyebrow={t('feat.analyze.eyebrow')} title={t('feat.analyze.title')} titleAccent={t('feat.analyze.titleAccent')} body={t('feat.analyze.body')} bullets={[t('feat.analyze.b1'), t('feat.analyze.b2'), t('feat.analyze.b3')]} src={shot1} alt={t('feat.analyze.alt')} />
+      <Feature eyebrow={t('feat.goals.eyebrow')} title={t('feat.goals.title')} titleAccent={t('feat.goals.titleAccent')} body={t('feat.goals.body')} bullets={[t('feat.goals.b1'), t('feat.goals.b2'), t('feat.goals.b3')]} src={shot2} alt={t('feat.goals.alt')} reverse />
+      <Feature eyebrow={t('feat.strength.eyebrow')} title={t('feat.strength.title')} titleAccent={t('feat.strength.titleAccent')} body={t('feat.strength.body')} bullets={[t('feat.strength.b1'), t('feat.strength.b2'), t('feat.strength.b3')]} src={shot3} alt={t('feat.strength.alt')} />
+      <Feature eyebrow={t('feat.coach.eyebrow')} title={t('feat.coach.title')} titleAccent={t('feat.coach.titleAccent')} body={t('feat.coach.body')} bullets={[t('feat.coach.b1'), t('feat.coach.b2'), t('feat.coach.b3')]} src={shot4} alt={t('feat.coach.alt')} reverse />
     </div>
 
+    <Gallery lang={lang} />
     <Bento lang={lang} />
     <Counters lang={lang} />
     <Testimonials lang={lang} />

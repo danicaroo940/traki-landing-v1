@@ -1,16 +1,51 @@
 ---
-interface Props { src: string; alt: string; }
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+interface Props { src: ImageMetadata; alt: string; }
 const { src, alt } = Astro.props;
 ---
-<div class="phone" data-reveal>
-  <img src={src} alt={alt} loading="lazy" width="1080" height="1920" />
+<div class="phone" data-parallax>
+  <div class="phone__frame">
+    <span class="phone__notch" aria-hidden="true"></span>
+    <Image
+      src={src}
+      alt={alt}
+      widths={[280, 420, 560]}
+      sizes="(max-width: 860px) 70vw, 300px"
+      format="webp"
+      quality={82}
+      loading="lazy"
+    />
+    <span class="phone__sheen" aria-hidden="true"></span>
+  </div>
+  <span class="phone__glow" aria-hidden="true"></span>
 </div>
 
 <style>
-  .phone {
-    position: relative; border-radius: var(--r-2xl); overflow: hidden;
-    border: 1px solid var(--accent); box-shadow: var(--glow-volt);
-    max-width: 300px; margin-inline: auto;
+  .phone { position: relative; max-width: 300px; margin-inline: auto; }
+  .phone__frame {
+    position: relative; border-radius: 36px; overflow: hidden;
+    border: 1px solid var(--border-strong);
+    background: var(--ink-950);
+    padding: 10px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.06),
+      0 24px 64px rgba(0,0,0,0.7);
   }
-  .phone img { border-radius: inherit; width: 100%; height: auto; }
+  .phone__frame img { border-radius: 26px; width: 100%; height: auto; display: block; }
+  .phone__notch {
+    position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+    width: 84px; height: 22px; border-radius: var(--r-pill);
+    background: var(--ink-950); z-index: 2;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+  }
+  .phone__sheen {
+    position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 1;
+    background: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, transparent 32%);
+  }
+  .phone__glow {
+    position: absolute; inset: 12% -8% -4% -8%; z-index: -1; pointer-events: none;
+    background: radial-gradient(ellipse at 50% 60%, rgba(57,255,92,0.18) 0%, transparent 65%);
+    filter: blur(18px);
+  }
 </style>

@@ -1,0 +1,49 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const words = ['1', '2', '3', '4', '5', '6'].map((k) => t(`marquee.${k}`));
+---
+<div class="marquee" aria-hidden="true" data-marquee>
+  <div class="marquee__track" data-marquee-track>
+    {[0, 1].map(() => (
+      <div class="marquee__group">
+        {words.map((w) => (
+          <span class="marquee__item">
+            {w}
+            <svg class="marquee__x" width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </span>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee {
+    overflow: hidden; border-block: 1px solid var(--border-subtle);
+    background: var(--surface-raised);
+    padding-block: var(--s-5);
+    user-select: none;
+  }
+  .marquee__track { display: flex; width: max-content; will-change: transform; }
+  .marquee__group { display: flex; align-items: center; flex-shrink: 0; }
+  .marquee__item {
+    display: inline-flex; align-items: center; gap: var(--s-6);
+    padding-inline: var(--s-6) 0;
+    font-family: var(--font-display); font-weight: 900; font-size: clamp(28px, 4vw, 44px);
+    text-transform: uppercase; letter-spacing: 0.01em; line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--ink-500);
+    transition: color var(--dur-med) var(--ease-out);
+  }
+  .marquee__item:nth-child(odd) { color: var(--text-primary); -webkit-text-stroke: 0; }
+  .marquee__x { color: var(--accent); margin-left: var(--s-6); flex-shrink: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track { transform: none !important; }
+  }
+</style>

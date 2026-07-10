@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/ui';
+import shot1 from '../assets/screens/screenshot_1.png';
+import shot2 from '../assets/screens/screenshot_2.png';
+import shot3 from '../assets/screens/screenshot_3.png';
+import shot4 from '../assets/screens/screenshot_4.png';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const shots = [
+  { img: shot1, k: '1' },
+  { img: shot2, k: '2' },
+  { img: shot3, k: '3' },
+  { img: shot4, k: '4' },
+];
+---
+<section class="gallery" data-gallery>
+  <div class="gallery__pin" data-gallery-pin>
+    <div class="container gallery__head">
+      <p class="eyebrow">{t('gallery.eyebrow')}</p>
+      <h2 class="display-lg">{t('gallery.title')} <span class="accent">{t('gallery.titleAccent')}</span></h2>
+    </div>
+    <div class="gallery__scroller">
+      <div class="gallery__track" data-gallery-track>
+      {shots.map(({ img, k }, i) => (
+        <figure class="gallery__card" data-gallery-card>
+          <span class="gallery__index numeric" aria-hidden="true">0{i + 1}</span>
+          <div class="gallery__shot">
+            <Image
+              src={img}
+              alt={`${t(`gallery.${k}.title`)} — ${t(`gallery.${k}.body`)}`}
+              widths={[320, 480, 640]}
+              sizes="(max-width: 860px) 72vw, 320px"
+              format="webp"
+              quality={82}
+              loading="lazy"
+            />
+          </div>
+          <figcaption class="gallery__caption">
+            <strong class="gallery__title">{t(`gallery.${k}.title`)}</strong>
+            <span class="gallery__body">{t(`gallery.${k}.body`)}</span>
+          </figcaption>
+        </figure>
+      ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery { position: relative; background: var(--ink-950); border-block: 1px solid var(--border-subtle); }
+  .gallery__pin { padding-block: var(--s-11); }
+  .gallery__scroller { overflow: hidden; }
+  .gallery__head { display: flex; flex-direction: column; gap: var(--s-4); align-items: flex-start; margin-bottom: var(--s-10); }
+  .gallery__track {
+    display: flex; gap: var(--s-8); width: max-content;
+    padding-inline: max(var(--s-6), calc((100vw - 1200px) / 2 + var(--s-6)));
+    will-change: transform;
+  }
+  .gallery__card { position: relative; margin: 0; width: min(320px, 72vw); flex-shrink: 0; }
+  .gallery__index {
+    position: absolute; top: -0.35em; left: -12px; z-index: 2;
+    font-size: clamp(56px, 7vw, 96px); line-height: 1; color: transparent;
+    -webkit-text-stroke: 1.5px var(--ink-600); pointer-events: none;
+  }
+  .gallery__shot {
+    border-radius: 28px; overflow: hidden; background: var(--ink-950);
+    border: 1px solid var(--border-strong); padding: 8px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+    transition: border-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+  }
+  .gallery__card:hover .gallery__shot { border-color: var(--accent); box-shadow: var(--glow-volt), 0 24px 64px rgba(0,0,0,0.7); }
+  .gallery__shot img { border-radius: 20px; width: 100%; height: auto; display: block; }
+  .gallery__caption { display: flex; flex-direction: column; gap: 2px; margin-top: var(--s-4); padding-left: var(--s-2); }
+  .gallery__title { font-family: var(--font-body); font-weight: 700; font-size: 16px; color: var(--text-primary); }
+  .gallery__body { font-size: 14px; color: var(--text-muted); }
+
+  /* Fallback + reduced motion: native horizontal scroll instead of pin */
+  @media (prefers-reduced-motion: reduce), (max-width: 860px) {
+    .gallery__pin { padding-block: var(--s-10); }
+    .gallery__head { margin-bottom: var(--s-8); }
+    .gallery__scroller { overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
+    .gallery__track { transform: none !important; padding-inline: var(--s-6); }
+    .gallery__card { scroll-snap-align: center; }
+    .gallery__index { left: 0; }
+  }
+</style>

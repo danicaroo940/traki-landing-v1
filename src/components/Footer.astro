@@ -8,34 +8,57 @@ const other = oppositeLang(lang);
 const year = 2026;
 ---
 <footer class="footer">
+  <div class="container footer__cta" data-reveal>
+    <p class="eyebrow">{t('footer.cta.eyebrow')}</p>
+    <a class="btn btn-primary btn-lg" href="#waitlist" data-magnetic>{t('footer.cta.button')}</a>
+  </div>
+
   <div class="container footer__inner">
     <div class="footer__brand">
       <a href={`/${lang}/`} class="wordmark">TRAKI<span class="dot">.</span></a>
       <p class="footer__tagline">{t('footer.tagline')}</p>
     </div>
-    <nav class="footer__col">
+    <nav class="footer__col" aria-label={t('footer.col.product')}>
       <p class="footer__heading">{t('footer.col.product')}</p>
       <a href="#features">{t('footer.link.features')}</a>
       <a href="#how">{t('footer.link.how')}</a>
       <a href="#faq">{t('footer.link.faq')}</a>
       <a href="#waitlist">{t('footer.link.waitlist')}</a>
     </nav>
-    <nav class="footer__col">
+    <nav class="footer__col" aria-label={t('footer.col.company')}>
       <p class="footer__heading">{t('footer.col.company')}</p>
       <a href="/privacy_policy.html">{t('footer.privacy')}</a>
       <a href={`/${other}/`}>{other.toUpperCase()}</a>
     </nav>
   </div>
+
+  <div class="footer__giant" aria-hidden="true">
+    <span class="footer__giant-text" data-footer-giant>TRAKI<span class="footer__giant-dot">.</span></span>
+  </div>
+
   <div class="container footer__bottom">
     <span>© {year} TRAKI. {t('footer.rights')}</span>
+    <button class="footer__top" type="button" data-back-top>
+      {t('footer.backTop')}
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 19V5m0 0-6 6m6-6 6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
   </div>
 </footer>
 
 <style>
-  .footer { border-top: 1px solid var(--border-subtle); padding-block: var(--s-10) var(--s-7); }
+  .footer { position: relative; border-top: 1px solid var(--border-subtle); overflow: hidden; }
+
+  .footer__cta {
+    display: flex; flex-direction: column; align-items: center; gap: var(--s-5);
+    padding-block: var(--s-11); text-align: center;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
   .footer__inner {
     display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--s-8);
-    padding-bottom: var(--s-9); border-bottom: 1px solid var(--border-subtle);
+    padding-block: var(--s-9);
   }
   .footer__brand { max-width: 34ch; }
   .wordmark { font-family: var(--font-display); font-weight: 900; font-size: 24px; text-transform: uppercase; letter-spacing: -0.02em; }
@@ -45,6 +68,51 @@ const year = 2026;
   .footer__heading { font-family: var(--font-body); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); margin: 0 0 var(--s-2); }
   .footer__col a { color: var(--text-secondary); font-size: 15px; min-height: 40px; display: inline-flex; align-items: center; transition: color var(--dur-fast) var(--ease-out); }
   .footer__col a:hover { color: var(--accent); }
-  .footer__bottom { padding-top: var(--s-6); color: var(--text-muted); font-size: 13px; }
-  @media (max-width: 720px) { .footer__inner { grid-template-columns: 1fr 1fr; } .footer__brand { grid-column: 1 / -1; } }
+
+  /* Giant wordmark strip */
+  .footer__giant {
+    display: flex; justify-content: center; overflow: hidden;
+    border-top: 1px solid var(--border-subtle);
+    pointer-events: none; user-select: none;
+    line-height: 0.78;
+  }
+  .footer__giant-text {
+    font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+    font-size: clamp(64px, 22vw, 330px); letter-spacing: -0.03em;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--ink-600);
+    transform: translateY(9%);
+    white-space: nowrap;
+  }
+  .footer__giant-dot { color: var(--accent); -webkit-text-stroke: 0; }
+
+  .footer__bottom {
+    position: relative;
+    display: flex; align-items: center; justify-content: space-between; gap: var(--s-4);
+    padding-block: var(--s-6); color: var(--text-muted); font-size: 13px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .footer__top {
+    display: inline-flex; align-items: center; gap: var(--s-2);
+    min-height: 44px; padding: 0 var(--s-4);
+    background: transparent; border: 1px solid var(--border-subtle); border-radius: var(--r-pill);
+    color: var(--text-secondary); font-family: var(--font-body); font-weight: 600; font-size: 13px;
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .footer__top:hover { color: var(--accent); border-color: var(--accent); }
+  .footer__top:focus-visible { outline: none; box-shadow: var(--glow-volt); }
+
+  @media (max-width: 720px) {
+    .footer__inner { grid-template-columns: 1fr 1fr; }
+    .footer__brand { grid-column: 1 / -1; }
+    .footer__bottom { flex-direction: column-reverse; align-items: flex-start; }
+  }
 </style>
+
+<script>
+  const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelector<HTMLButtonElement>('[data-back-top]')?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: prefersReduce ? 'auto' : 'smooth' });
+  });
+</script>

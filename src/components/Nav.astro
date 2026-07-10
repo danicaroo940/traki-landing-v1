@@ -5,18 +5,51 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const other = oppositeLang(lang);
+const links = [
+  { href: '#features', key: 'nav.features' },
+  { href: '#how', key: 'nav.how' },
+  { href: '#faq', key: 'nav.faq' },
+];
 ---
 <header class="nav" data-nav>
   <div class="container nav__inner">
     <a href={`/${lang}/`} class="wordmark" aria-label="TRAKI">TRAKI<span class="dot">.</span></a>
-    <nav class="nav__links">
-      <a href="#features">{t('nav.features')}</a>
-      <a href="#how">{t('nav.how')}</a>
-      <a href="#faq">{t('nav.faq')}</a>
+
+    <nav class="nav__links" aria-label="Principal">
+      {links.map(({ href, key }) => (
+        <a href={href} data-nav-link={href.slice(1)}>{t(key)}</a>
+      ))}
     </nav>
-    <nav class="nav__actions">
+
+    <div class="nav__actions">
       <a class="nav__lang" href={`/${other}/`} aria-label={`Switch to ${other.toUpperCase()}`}>{other.toUpperCase()}</a>
       <a class="btn btn-primary nav__cta" href="#waitlist">{t('nav.cta')}</a>
+      <button
+        class="nav__burger" type="button"
+        aria-label={t('nav.menu.open')}
+        aria-expanded="false" aria-controls="mobile-menu"
+        data-menu-toggle
+        data-label-open={t('nav.menu.open')}
+        data-label-close={t('nav.menu.close')}
+      >
+        <span class="nav__burger-line" aria-hidden="true"></span>
+        <span class="nav__burger-line" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav__menu" id="mobile-menu" data-menu hidden>
+    <nav class="container nav__menu-inner" aria-label="Principal móvil">
+      {links.map(({ href, key }, i) => (
+        <a class="nav__menu-link" href={href} style={`--i:${i}`}>
+          <span class="nav__menu-num numeric" aria-hidden="true">0{i + 1}</span>
+          {t(key)}
+        </a>
+      ))}
+      <div class="nav__menu-foot">
+        <a class="btn btn-primary btn-lg nav__menu-cta" href="#waitlist">{t('nav.cta')}</a>
+        <a class="nav__lang nav__lang--menu" href={`/${other}/`}>{other.toUpperCase()}</a>
+      </div>
     </nav>
   </div>
 </header>
@@ -28,28 +61,163 @@ const other = oppositeLang(lang);
     transition: background var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out);
   }
   .nav[data-scrolled] {
-    background: color-mix(in srgb, var(--surface-base) 80%, transparent);
-    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--surface-base) 82%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-bottom-color: var(--border-subtle);
   }
-  .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  /* Above the overlay (a sibling inside this header) so the wordmark and
+     burger stay visible while the menu is open. */
+  .nav__inner { position: relative; z-index: 60; display: flex; align-items: center; justify-content: space-between; height: 64px; gap: var(--s-4); }
   .wordmark {
     font-family: var(--font-display); font-weight: 900; font-size: 24px;
     text-transform: uppercase; letter-spacing: -0.02em; color: var(--text-primary);
   }
   .dot { color: var(--accent); }
+
   .nav__links { display: flex; align-items: center; gap: var(--s-7); }
   .nav__links a {
+    position: relative;
     font-family: var(--font-body); font-weight: 600; font-size: 14px; color: var(--text-secondary);
     min-height: 44px; display: inline-flex; align-items: center;
     transition: color var(--dur-fast) var(--ease-out);
   }
-  .nav__links a:hover { color: var(--text-primary); }
-  .nav__actions { display: flex; align-items: center; gap: var(--s-4); }
-  @media (max-width: 760px) { .nav__links { display: none; } }
-  .nav__lang {
-    font-family: var(--font-body); font-weight: 700; font-size: 13px; letter-spacing: 0.08em;
-    color: var(--text-muted); min-height: 44px; display: inline-flex; align-items: center;
+  .nav__links a::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 8px;
+    height: 2px; border-radius: var(--r-pill); background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform var(--dur-med) var(--ease-out);
   }
-  .nav__lang:hover { color: var(--text-primary); }
+  .nav__links a:hover { color: var(--text-primary); }
+  .nav__links a:hover::after, .nav__links a[data-active]::after { transform: scaleX(1); }
+  .nav__links a[data-active] { color: var(--text-primary); }
+
+  .nav__actions { display: flex; align-items: center; gap: var(--s-4); }
+  .nav__lang {
+    font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    min-height: 32px; padding: 0 10px; display: inline-flex; align-items: center;
+    border: 1px solid var(--border-subtle); border-radius: var(--r-pill);
+    transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .nav__lang:hover { color: var(--text-primary); border-color: var(--border-strong); }
+
+  /* Burger — hidden on desktop */
+  .nav__burger {
+    display: none; position: relative; z-index: 60;
+    width: 44px; height: 44px; padding: 0;
+    background: transparent; border: 0; cursor: pointer;
+    align-items: center; justify-content: center; flex-direction: column; gap: 7px;
+  }
+  .nav__burger-line {
+    display: block; width: 22px; height: 2px; border-radius: var(--r-pill);
+    background: var(--text-primary);
+    transition: transform var(--dur-med) var(--ease-out);
+  }
+  .nav__burger[aria-expanded="true"] .nav__burger-line:nth-child(1) { transform: translateY(4.5px) rotate(45deg); }
+  .nav__burger[aria-expanded="true"] .nav__burger-line:nth-child(2) { transform: translateY(-4.5px) rotate(-45deg); }
+  .nav__burger:focus-visible { outline: none; box-shadow: var(--glow-volt); border-radius: var(--r-sm); }
+
+  /* Mobile menu overlay — sits under the header bar so the wordmark and
+     burger stay visible; padding-top clears the 64px bar. */
+  .nav__menu {
+    position: fixed; inset: 0; z-index: 40;
+    background: color-mix(in srgb, var(--ink-950) 96%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding-top: 88px;
+  }
+  .nav__menu[hidden] { display: none; }
+  .nav__menu-inner { display: flex; flex-direction: column; gap: var(--s-2); }
+  .nav__menu-link {
+    display: flex; align-items: baseline; gap: var(--s-4);
+    padding: var(--s-4) 0;
+    border-bottom: 1px solid var(--border-subtle);
+    font-family: var(--font-display); font-weight: 900; font-size: clamp(32px, 9vw, 44px);
+    text-transform: uppercase; line-height: 1; color: var(--text-primary);
+    opacity: 0; transform: translateY(16px);
+  }
+  .nav__menu[data-open] .nav__menu-link {
+    opacity: 1; transform: none;
+    transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+    transition-delay: calc(var(--i) * 60ms);
+  }
+  .nav__menu-link:active { color: var(--accent); }
+  .nav__menu-num { font-size: 14px; color: var(--accent); }
+  .nav__menu-foot {
+    display: flex; align-items: center; gap: var(--s-4); margin-top: var(--s-7);
+    opacity: 0;
+  }
+  .nav__menu[data-open] .nav__menu-foot {
+    opacity: 1; transition: opacity var(--dur-slow) var(--ease-out); transition-delay: 240ms;
+  }
+  .nav__menu-cta { flex: 1; }
+  .nav__lang--menu { min-height: 44px; padding: 0 18px; font-size: 14px; }
+
+  @media (max-width: 760px) {
+    .nav__links { display: none; }
+    .nav__cta { display: none; }
+    .nav__burger { display: inline-flex; }
+  }
+  @media (min-width: 761px) {
+    .nav__menu { display: none !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav__menu-link, .nav__menu-foot { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
 </style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+
+  function setOpen(open: boolean) {
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '');
+    if (open) {
+      menu.hidden = false;
+      // next frame so the staggered link transition runs
+      requestAnimationFrame(() => menu.setAttribute('data-open', ''));
+      document.body.style.overflow = 'hidden';
+    } else {
+      menu.removeAttribute('data-open');
+      menu.hidden = true;
+      document.body.style.overflow = '';
+    }
+  }
+
+  toggle?.addEventListener('click', () => {
+    setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+  // Close when a link inside the menu is chosen
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+
+  // Scrollspy — underline the nav link of the section in view
+  const spyLinks = document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+  const sections = Array.from(spyLinks)
+    .map((a) => document.getElementById(a.dataset.navLink ?? ''))
+    .filter((el): el is HTMLElement => el !== null);
+  if (sections.length) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const link = document.querySelector(`[data-nav-link="${entry.target.id}"]`);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            spyLinks.forEach((a) => a.removeAttribute('data-active'));
+            link.setAttribute('data-active', '');
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -60% 0px' },
+    );
+    sections.forEach((s) => spy.observe(s));
+  }
+</script>
