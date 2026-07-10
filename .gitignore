@@ -26,3 +26,8 @@ pnpm-debug.log*
 # Remotion isolated project artifacts
 remotion/node_modules
 remotion/out
+
+# opencode agent config
+.agents/
+.claude/
+skills-lock.json
